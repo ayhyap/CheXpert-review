@@ -1,5 +1,5 @@
 # CheXpert-review
-Results of an amateur manual review of the CheXpert dataset
+Results of an amateur manual review of the CheXpert dataset (https://stanfordmlgroup.github.io/competitions/chexpert/)
 
 Overall: 688 (0.3%) images were excluded and 155 (0.07%) images were edited.
 
