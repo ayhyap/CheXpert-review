@@ -9,6 +9,8 @@ train-ayhyap.csv contains the 'Path' column from the original train.csv, and 3 c
 * 'edited' (1 or blank) indicates whether the image should be edited.
 * 'note' (string) indicates the reason for exclusion, or the edit required.
 
+# Exclusions
+
 Count | Reason
 ------|-------
 354 |incomplete
@@ -20,8 +22,6 @@ Count | Reason
 4 | quantized
 4 | posture
 
-Comments on exclusion reasoning
-
 * Incomplete: The image contains under 60%-70% of the chest area. As labels are generated on a study-level, it is possible for the label to refer to an area outside of the image.
 * Striped: The image contains a burst of rows has been shifted horizontally with wraparound. (there is actually more nuance to this, and fixing it is nontrivial)
 * Corrupted: The image appears corrupted in some way.
@@ -31,6 +31,8 @@ Comments on exclusion reasoning
 * Quantized: The image's pixel values have been quantized, reducing effective bit-depth and making diagnosis impossible.
 * Posture: The patient's posture significantly complicates diagnosis. There were several patients with severe scoliosis (spine curved sideways) who could be excluded for this reason, but they have been left in.
 
+# Edits
+
 The edits are all rotations to correct the orientation of the image.
 
 They are of format: (angle) CW rotation
@@ -39,3 +41,17 @@ Rotations are in multiples of 90 degrees, and always clockwise.
 
 Note that only Frontal images have this field labeled, Lateral images were skipped.
  
+# Other comments
+
+* There are 3 main orientations of the images (not all images are labeled, and not all labeled images are correctly labeled)
+  * Anteroposterior (AP; x-rays shot front-to-back)
+  * Posteroanterior (PA; x-rays shot back-to-front)
+  * Lateral (LL; x-rays shot from the side)
+* There are also many postures the patient can hold (each have distinct appearances on the images and might be annotated on the image, but are not labeled in train.csv)
+  * Upright (best quality)
+  * Semi-upright (lower quality)
+  * Supine (lying down, back against bed; lower quality; usually AP)
+  * Decubitus (lying on side)
+* As previously mentioned, there are 
+* Many imaging studies have multiple images which collectively capture the entire chest area, but do not do so individually. Since labels are generated on a study-level, this might introduce some labeling errors.
+* Some patients have 60+ images. One should consider stratifying epochs by patient to reduce bias towards patients with more images than others.
