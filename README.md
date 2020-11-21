@@ -42,6 +42,13 @@ They are of format: (angle) CW rotation
 Rotations are in multiples of 90 degrees, and always clockwise.
 
 Note that only Frontal images have this field labeled, Lateral images were skipped.
+
+Count | Rotation to fix (CW)
+------|-------
+69 | 90 degrees
+61 | 180 degrees
+25 | 270 degrees
+
  
 # Samples
 
