@@ -41,6 +41,17 @@ Rotations are in multiples of 90 degrees, and always clockwise.
 
 Note that only Frontal images have this field labeled, Lateral images were skipped.
  
+# Samples
+
+Sample | Note | Path
+-------|------|-----
+![striped sample](sample_striped.jpg) | striped | CheXpert-v1.0/train=patient07083/study3/view1_frontal.jpg
+![corrupted sample](sample_corrupted.jpg) | corrupted | CheXpert-v1.0/train/patient05271/study5/view2_frontal.jpg
+![incomplete sample](sample_incomplete.jpg) | incomplete | CheXpert-v1.0/train/patient05129/study1/view1_frontal.jpg
+![non-cxr sample](sample_non-cxr.jpg) | non-cxr | CheXpert-v1.0/train/patient46319/study3/view1_frontal.jpg
+![obstructed sample](sample_obstructed.jpg) | obstructed | CheXpert-v1.0/train/patient05918/study6/view1_frontal.jpg
+![poor sample](sample_poor.jpg) | poor | CheXpert-v1.0=train/patient32307/study3/view1_frontal.jpg
+
 # Other comments
 
 * There are 3 main orientations of the images (not all images are labeled, and not all labeled images are correctly labeled)
