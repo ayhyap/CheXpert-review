@@ -9,6 +9,8 @@ train-ayhyap.csv contains the 'Path' column from the original train.csv, and 3 c
 * 'edited' (1 or blank) indicates whether the image should be edited.
 * 'note' (string) indicates the reason for exclusion, or the edit required.
 
+DISCLAIMER: I have no training in radiology. This was done from the perspective of a computer scientist.
+
 # Exclusions
 
 Count | Reason
@@ -52,17 +54,29 @@ Sample | Note | Path
 ![obstructed sample](sample_obstructed.jpg) | obstructed | CheXpert-v1.0/train/patient05918/study6/view1_frontal.jpg
 ![poor sample](sample_poor.jpg) | poor | CheXpert-v1.0=train/patient32307/study3/view1_frontal.jpg
 
-# Other comments
+# Comments
 
-* There are 3 main orientations of the images (not all images are labeled, and not all labeled images are correctly labeled)
-  * Anteroposterior (AP; x-rays shot front-to-back)
-  * Posteroanterior (PA; x-rays shot back-to-front)
-  * Lateral (LL; x-rays shot from the side)
-* There are also many postures the patient can hold (each have distinct appearances on the images and might be annotated on the image, but are not labeled in train.csv)
-  * Upright (best quality)
-  * Semi-upright (lower quality)
-  * Supine (lying down, back against bed; lower quality; usually AP)
-  * Decubitus (lying on side)
-* As previously mentioned, there are 
+## Image Projection
+
+There are 3 main projections of the images (not all images are labeled, and not all labeled images are correctly labeled)
+* Anteroposterior (AP; x-rays shot front-to-back)
+* Posteroanterior (PA; x-rays shot back-to-front)
+* Lateral (LL; x-rays shot from the side)
+
+Only in very, VERY rare circumstances should the heart appear on the left side of AP or PA images. This means mirroring image augmentation might not be appropriate.
+
+Similarly, images are almost always oriented upright. This means rotational image augmentation should be limited to angles < 45 degrees.
+
+## Patient Orientation
+
+The patient can also be in different orientations (each have distinct appearances on the images and might be annotated on the image, but are not labeled in train.csv)
+* Upright (best quality)
+* Semi-upright (lower quality)
+* Supine (lying down, back against bed; lower quality; usually AP)
+* Decubitus (lying on side)
+
+## Others
+
 * Many imaging studies have multiple images which collectively capture the entire chest area, but do not do so individually. Since labels are generated on a study-level, this might introduce some labeling errors.
-* Some patients have 60+ images. One should consider stratifying epochs by patient to reduce bias towards patients with more images than others.
+* Some patients have 60+ images. One could consider stratifying training epochs by patient to reduce bias towards patients with more images than others.
+* X-Ray exposure is sometimes unevenly distributed across the image (e.g. bottom right much brighter than top left). I found using CLAHE with (2,2) tileGridSize (thus equalizing  the image by quadrants) to be effective in normalizing the uneven distribution. (https://docs.opencv.org/master/d5/daf/tutorial_py_histogram_equalization.html)
